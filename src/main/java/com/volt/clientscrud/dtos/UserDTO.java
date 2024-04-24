@@ -1,9 +1,6 @@
 package com.volt.clientscrud.dtos;
 
 import com.volt.clientscrud.models.User;
-import jakarta.persistence.Transient;
-
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 public class UserDTO {
@@ -13,21 +10,19 @@ public class UserDTO {
     private String password;
     private String document;
     private LocalDateTime birthDate;
+    private int age;
 
-    public UserDTO(String name, String email, String password, String document, LocalDateTime birthDate) {
+    public UserDTO(Long id, String name, String email, String password, String document, LocalDateTime birthDate) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.document = document;
         this.birthDate = birthDate;
+        this.age = getAge();
     }
     public UserDTO(User user) {
-        this.id = user.getId();
-        this.name = user.getName();
-        this.email = user.getEmail();
-        this.password = user.getPassword();
-        this.document = user.getDocument();
-        this.birthDate = user.getBirthDate();
+        this(user.getId(), user.getName(), user.getEmail(), user.getPassword(),user.getDocument(), user.getBirthDate());
     }
 
     public UserDTO() {
@@ -49,6 +44,19 @@ public class UserDTO {
         this.password = password;
     }
 
+    public int getAge() {
+        if(birthDate.getDayOfMonth() < LocalDateTime.now().getDayOfMonth()
+                &&
+                birthDate.getMonth().getValue() < LocalDateTime.now().getMonth().getValue()){
+            this.setAge(LocalDateTime.now().getYear() - birthDate.getYear());
+        }else{
+            this.setAge(LocalDateTime.now().getYear() - birthDate.getYear() - 1);
+        }
+        return age;
+    }
+    public void setAge(int age) {
+        this.age = age;
+    }
     public Long getId() {
         return id;
     }
