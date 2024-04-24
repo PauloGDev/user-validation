@@ -3,6 +3,7 @@ package com.volt.clientscrud.models;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users_tb")
@@ -15,14 +16,17 @@ public class User {
     private String email;
     private String password;
     private String document;
-    private Instant birthDate;
+    private LocalDateTime birthDate;
+    @Transient
+    private int age;
 
-    public User(String name, String email, String password, String document, Instant birthDate) {
+    public User(String name, String email, String password, String document, LocalDateTime birthDate) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.document = document;
         this.birthDate = birthDate;
+        this.age = LocalDateTime.now().getYear() - birthDate.getYear();
     }
 
     public User() {
@@ -42,6 +46,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(LocalDateTime birthDate) {
+        age = LocalDateTime.now().getYear() - birthDate.getYear();
     }
 
     public Long getId() {
@@ -68,11 +80,11 @@ public class User {
         this.document = document;
     }
 
-    public Instant getBirthDate() {
+    public LocalDateTime getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Instant birthDate) {
+    public void setBirthDate(LocalDateTime birthDate) {
         this.birthDate = birthDate;
     }
     }

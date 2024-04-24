@@ -1,8 +1,10 @@
 package com.volt.clientscrud.dtos;
 
 import com.volt.clientscrud.models.User;
+import jakarta.persistence.Transient;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 public class UserDTO {
     private Long id;
@@ -10,9 +12,9 @@ public class UserDTO {
     private String email;
     private String password;
     private String document;
-    private Instant birthDate;
+    private LocalDateTime birthDate;
 
-    public UserDTO(String name, String email, String password, String document, Instant birthDate) {
+    public UserDTO(String name, String email, String password, String document, LocalDateTime birthDate) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -65,10 +67,10 @@ public class UserDTO {
     public void setDocument(String document) {
         this.document = document;
     }
-    public Instant getBirthDate() {
+    public LocalDateTime getBirthDate() {
         return birthDate;
     }
-    public void setBirthDate(Instant birthDate) {
+    public void setBirthDate(LocalDateTime birthDate) {
         this.birthDate = birthDate;
     }
 }
